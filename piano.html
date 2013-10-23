@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="white"></div>
+<div class="black sa"></div>
+<div class="white"></div>
+<div class="black re"></div>
+<div class="white"></div>
+<div class="white ga"></div>
+<div class="black ma"></div>
+<div class="white"></div>
+<div class="black pa"></div>
+<div class="white"></div>
+<div class="black tha"></div>
+<div class="white"></div>
+<div class="white ni"></div>
+<div class="black saan"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+
+<script>
+var sounds = {}
+soundssa = null;
+sounds.re = null;
+sounds.ga = null;
+sounds.ma = null;
+sounds.pa = null;
+sounds.tha = null;
+sounds.ni = null;
+sounds.saan = null;
+// Fix up prefixing
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var context = new AudioContext();
+// Sounds
+
+loadSounds("sounds/sa.ogg","sa");
+loadSounds("sounds/re.ogg","re");
+loadSounds("sounds/ga.ogg","ga");
+loadSounds("sounds/ma.ogg","ma");
+loadSounds("sounds/pa.ogg","pa");
+loadSounds("sounds/tha.ogg","tha");
+loadSounds("sounds/ni.ogg","ni");
+loadSounds("sounds/saan.ogg","saan");
+
+var onError;
+function loadSounds(url, sound) {
+  var request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
+  // Decode asynchronously
+  request.onload = function() {
+    context.decodeAudioData(request.response, function(buffer) {
+      sounds[sound] = buffer;
+    }, onError);
+  }
+  request.send();
+}
+
+function playSounds(bufferList) {
+  var source = new Array();
+  for(var i = 0; i < bufferList.length; i++){
+      source[i] = context.createBufferSource();
+      source[i].buffer = bufferList[i];
+      source[i].connect(context.destination);
+  }
+  for(var i = 0; i < bufferList.length; i++){
+      source[i].start(0);
+  }
+}
+
+document.getElementsByClassName("sa")[0].addEventListener('click',function(){  playSounds([sounds.sa])  });
+document.getElementsByClassName("re")[0].addEventListener('click',function(){  playSounds([sounds.re])  }); 
+document.getElementsByClassName("ga")[0].addEventListener('click',function(){  playSounds([sounds.ga])  }); 
+document.getElementsByClassName("ma")[0].addEventListener('click',function(){  playSounds([sounds.ma])  }); 
+document.getElementsByClassName("pa")[0].addEventListener('click',function(){  playSounds([sounds.pa])  }); 
+document.getElementsByClassName("tha")[0].addEventListener('click',function(){  playSounds([sounds.tha])  });
+document.getElementsByClassName("ni")[0].addEventListener('click',function(){  playSounds([sounds.ni])  });
+document.getElementsByClassName("saan")[0].addEventListener('click',function(){  playSounds([sounds.saan])  });
+
+</script>
+<style type="text/css">
+	.white:active{
+		background:white;
+	}
+	.black:active{
+		background:white;
+	}
+   .white{
+    border-style: solid;
+    border-width: 1px;
+    border-color: greenyellow;
+    float:left;
+    margin-left:-10px;
+    width:40px;
+    height:100px;
+    background:gray;
+}
+.black{
+    position: relative;
+    float:left;
+    margin-left:-10px;
+    width:20px;
+    height:50px;
+    background:black;
+}
+</style>
+</body>
+</html>
