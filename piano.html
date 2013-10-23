@@ -18,9 +18,16 @@
 <div class="white"></div>
 <div class="black"></div>
 <div class="white"></div>
+<div class="tap_area" style="width:100%; height:300px; border:solid;float:left;margin-top: 50px;">
+ <p>click in this area to play "Jan Gan Maan"<br>Notes will be played itself.just maintain the flow</p>
+ <button onclick="resetSong()">Reset Song</button>
+</div>
+
 
 <script>
 var sounds = {}
+// Jan Gan Maan song
+song = ["sa", "re", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "re", "ga", "ma", "ga", "ga", "ga", "re", "re", "re", "ni", "re", "sa", "sa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "ma", "tha", "pa", "ma", "ma", "ma", "ga", "ga", "ga", "re", "ma", "ga", "ga", "ga", "ga", "ga", "ga", "re", "pa", "pa", "pa", "ma", "ma", "ga", "ga", "ga", "re", "re", "re", "re", "ni", "re", "sa", "sa", "re", "ga", "ga", "ga", "ga", "re", "ga", "ma", "re", "ga","ma", "ma", "ma", "ma", "ga", "re", "ma", "ga", "ga", "ga", "re", "re", "re", "re", "ni", "re", "sa", "pa", "pa", "pa", "pa", "pa", "pa", "ma", "pa", "pa", "pa", "ma", "tha", "pa", "ma",  "ma",  "ma", "ga", "ga", "ga", "re", "ma", "ga","saan", "ni", "saan", "ni", "tha", "ni", "tha", "pa", "sa", "sa", "sa", "re", "re", "ga", "ga", "re", "ga", "ma"];
 sounds.sa = null;
 sounds.re = null;
 sounds.ga = null;
@@ -78,6 +85,16 @@ document.getElementsByClassName("tha")[0].addEventListener('click',function(){  
 document.getElementsByClassName("ni")[0].addEventListener('click',function(){  playSounds([sounds.ni])  });
 document.getElementsByClassName("saan")[0].addEventListener('click',function(){  playSounds([sounds.saan])  });
 
+var index=0;
+document.getElementsByClassName("tap_area")[0].addEventListener('click', function () {
+playSounds([sounds[ song[index] ]]); 
+console.log(song[index]);
+index = index + 1;       
+});
+
+function resetSong(){
+index = 0;
+}
 </script>
 <style type="text/css">
 	.white:active{
