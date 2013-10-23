@@ -18,16 +18,15 @@
 <div class="white"></div>
 <div class="black"></div>
 <div class="white"></div>
-<p>click in this area to play "Jan Gan Maan"<br>Notes will be played itself.just maintain the flow</p>
+<p>click in this area to play "Jan Gan Maan"
+    <br>Notes will be played itself.just maintain the flow</p>
 <button onclick="resetSong()">Reset Song</button>
-<div class="tap_area" style="width:100%; height:300px; border:solid;float:left;margin-top: 50px;">
-</div>
-
+<div class="tap_area" style="width:100%; height:300px; border:solid;float:left;margin-top: 50px;"></div>
 
 <script>
 var sounds = {}
 // Jan Gan Maan song
-song = ["sa", "re", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "re", "ga", "ma", "ga", "ga", "ga", "re", "re", "re", "ni", "re", "sa", "sa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "ma", "tha", "pa", "ma", "ma", "ma", "ga", "ga", "ga", "re", "ma", "ga", "ga", "ga", "ga", "ga", "ga", "re", "pa", "pa", "pa", "ma", "ma", "ga", "ga", "ga", "re", "re", "re", "re", "ni", "re", "sa", "sa", "re", "ga", "ga", "ga", "ga", "re", "ga", "ma", "re", "ga","ma", "ma", "ma", "ma", "ga", "re", "ma", "ga", "ga", "ga", "re", "re", "re", "re", "ni", "re", "sa", "pa", "pa", "pa", "pa", "pa", "pa", "ma", "pa", "pa", "pa", "ma", "tha", "pa", "ma",  "ma",  "ma", "ga", "ga", "ga", "re", "ma", "ga","saan", "ni", "saan", "ni", "tha", "ni", "tha", "pa", "sa", "sa", "sa", "re", "re", "ga", "ga", "re", "ga", "ma"];
+song = ["sa", "re", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "ga", "re", "ga", "ma", "ga", "ga", "ga", "re", "re", "re", "ni", "re", "sa", "sa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "pa", "ma", "tha", "pa", "ma", "ma", "ma", "ga", "ga", "ga", "re", "ma", "ga", "ga", "ga", "ga", "ga", "ga", "re", "pa", "pa", "pa", "ma", "ma", "ga", "ga", "ga", "re", "re", "re", "re", "ni", "re", "sa", "sa", "re", "ga", "ga", "ga", "ga", "re", "ga", "ma", "re", "ga", "ma", "ma", "ma", "ma", "ga", "re", "ma", "ga", "ga", "ga", "re", "re", "re", "re", "ni", "re", "sa", "pa", "pa", "pa", "pa", "pa", "pa", "ma", "pa", "pa", "pa", "ma", "tha", "pa", "ma", "ma", "ma", "ga", "ga", "ga", "re", "ma", "ga", "saan", "ni", "saan", "ni", "tha", "ni", "tha", "pa", "sa", "sa", "sa", "re", "re", "ga", "ga", "re", "ga", "ma"];
 sounds.sa = null;
 sounds.re = null;
 sounds.ga = null;
@@ -41,59 +40,76 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
 // Sounds
 
-loadSounds("sounds/sa.ogg","sa");
-loadSounds("sounds/re.ogg","re");
-loadSounds("sounds/ga.ogg","ga");
-loadSounds("sounds/ma.ogg","ma");
-loadSounds("sounds/pa.ogg","pa");
-loadSounds("sounds/tha.ogg","tha");
-loadSounds("sounds/ni.ogg","ni");
-loadSounds("sounds/saan.ogg","saan");
+loadSounds("sounds/sa.ogg", "sa");
+loadSounds("sounds/re.ogg", "re");
+loadSounds("sounds/ga.ogg", "ga");
+loadSounds("sounds/ma.ogg", "ma");
+loadSounds("sounds/pa.ogg", "pa");
+loadSounds("sounds/tha.ogg", "tha");
+loadSounds("sounds/ni.ogg", "ni");
+loadSounds("sounds/saan.ogg", "saan");
 
 var onError;
+
 function loadSounds(url, sound) {
-  var request = new XMLHttpRequest();
-  request.open('GET', url, true);
-  request.responseType = 'arraybuffer';
-  // Decode asynchronously
-  request.onload = function() {
-    context.decodeAudioData(request.response, function(buffer) {
-      sounds[sound] = buffer;
-    }, onError);
-  }
-  request.send();
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.responseType = 'arraybuffer';
+    // Decode asynchronously
+    request.onload = function () {
+        context.decodeAudioData(request.response, function (buffer) {
+            sounds[sound] = buffer;
+        }, onError);
+    }
+    request.send();
 }
 
 function playSounds(bufferList) {
-  var source = new Array();
-  for(var i = 0; i < bufferList.length; i++){
-      source[i] = context.createBufferSource();
-      source[i].buffer = bufferList[i];
-      source[i].connect(context.destination);
-  }
-  for(var i = 0; i < bufferList.length; i++){
-      source[i].start(0);
-  }
+    var source = new Array();
+    for (var i = 0; i < bufferList.length; i++) {
+        source[i] = context.createBufferSource();
+        source[i].buffer = bufferList[i];
+        source[i].connect(context.destination);
+    }
+    for (var i = 0; i < bufferList.length; i++) {
+        source[i].start(0);
+    }
 }
 
-document.getElementsByClassName("sa")[0].addEventListener('click',function(){  playSounds([sounds.sa])  });
-document.getElementsByClassName("re")[0].addEventListener('click',function(){  playSounds([sounds.re])  }); 
-document.getElementsByClassName("ga")[0].addEventListener('click',function(){  playSounds([sounds.ga])  }); 
-document.getElementsByClassName("ma")[0].addEventListener('click',function(){  playSounds([sounds.ma])  }); 
-document.getElementsByClassName("pa")[0].addEventListener('click',function(){  playSounds([sounds.pa])  }); 
-document.getElementsByClassName("tha")[0].addEventListener('click',function(){  playSounds([sounds.tha])  });
-document.getElementsByClassName("ni")[0].addEventListener('click',function(){  playSounds([sounds.ni])  });
-document.getElementsByClassName("saan")[0].addEventListener('click',function(){  playSounds([sounds.saan])  });
-
-var index=0;
-document.getElementsByClassName("tap_area")[0].addEventListener('click', function () {
-playSounds([sounds[ song[index] ]]); 
-console.log(song[index]);
-index = index + 1;       
+document.getElementsByClassName("sa")[0].addEventListener('click', function () {
+    playSounds([sounds.sa])
+});
+document.getElementsByClassName("re")[0].addEventListener('click', function () {
+    playSounds([sounds.re])
+});
+document.getElementsByClassName("ga")[0].addEventListener('click', function () {
+    playSounds([sounds.ga])
+});
+document.getElementsByClassName("ma")[0].addEventListener('click', function () {
+    playSounds([sounds.ma])
+});
+document.getElementsByClassName("pa")[0].addEventListener('click', function () {
+    playSounds([sounds.pa])
+});
+document.getElementsByClassName("tha")[0].addEventListener('click', function () {
+    playSounds([sounds.tha])
+});
+document.getElementsByClassName("ni")[0].addEventListener('click', function () {
+    playSounds([sounds.ni])
+});
+document.getElementsByClassName("saan")[0].addEventListener('click', function () {
+    playSounds([sounds.saan])
 });
 
-function resetSong(){
-index = 0;
+var index = 0;
+document.getElementsByClassName("tap_area")[0].addEventListener('click', function () {
+    playSounds([sounds[song[index]]]);
+    console.log(song[index]);
+    index = index + 1;
+});
+
+function resetSong() {
+    index = 0;
 }
 </script>
 <style type="text/css">
