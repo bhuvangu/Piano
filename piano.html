@@ -105,9 +105,12 @@ document.getElementsByClassName("saan")[0].addEventListener('click', function ()
 
 var index = 0;
 document.getElementsByClassName("tap_area")[0].addEventListener('click', function () {
+	var unpress = document.getElementsByClassName("tap_area")[0].style.background;
+	document.getElementsByClassName("tap_area")[0].style.background = "yellow";
     playSounds([sounds[song[index]]]);
     console.log(song[index]);
     index = index + 1;
+	document.getElementsByClassName("tap_area")[0].style.background = unpress;
 });
 
 function resetSong() {
